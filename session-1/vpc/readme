@@ -1,1 +1,26 @@
 In that excercise we will practice modeling the script better  
+
+1) Create 3 files:
+- main.py
+- config.py
+- awsops.py
+
+2) in the config.py create 3 configurations, we will use later:
+- REGION="us-east-1"
+- CIDR="10.24.0.0/16"
+- TENANCY="default"
+
+3) in awsops.py create AwsOperation class:
+- class AwsOperation():
+
+4) in the class, create __init__ function that create self ec2 object that we will use in the class:
+- def __init__(self):
+- self.ec2 = boto3.client('ec2', region_name=config.REGION)
+
+5) create a function that create a vpc
+- create_vpc(self):
+- self.ec2.create_vpc(CidrBlock=config.CIDR, InstanceTenancy=config.TENANCY)
+
+6) in the main.py create aws object of AwsOperation, and create the vpc with it:
+- aws = awsops.AwsOperation()
+- aws.create_vpc()
