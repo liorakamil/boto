@@ -47,7 +47,6 @@ class AwsOperations():
         )
         return response['NatGateway']['NatGatewayId']
 
-
     def wait_for_nat_gateway(self, nat_gateway_id):
         """ Use waiter method to wait till the nat gateway is ready """
         waiter = self.ec2.get_waiter('nat_gateway_available')
@@ -62,6 +61,11 @@ class AwsOperations():
             }
         )
 
+        try:
+            response = self.ec2.create_nat_gateway(AllocationId='eip')
+            return response['NatGatewayId']
+        except ClientError as error:
+            logging.error(error)
 
     def create_subnet(self, cidr):
         """  Get availability zone, cidr and vpc id
